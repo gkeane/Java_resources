@@ -18,14 +18,70 @@ The query implements a daily rollout schedule where machines are selected based 
 - Complete coverage by March 30, 2024
 
 ### 2. Java8UninstallEffort.ps1
-PowerShell script for Windows systems to handle Java 8 uninstallation.
-*(File contents not provided in the current context)*
+PowerShell script for Windows systems that:
+- Checks both 32-bit and 64-bit registry locations for Java 8 installations
+- Logs all actions to `C:\ProgramData\Quest\KACE\user\JavaUninstallEffort.log`
+- Automatically generates and executes uninstall commands
+- Uses quiet mode (/qn) for silent uninstallation
+- Performs cleanup of temporary files after uninstallation
+- Handles both MSI and standard installations
+
+Key features:
+- Double-pass verification of removal
+- Detailed logging of all actions
+- Self-cleanup after execution
+- Silent operation for automated deployment
 
 ### 3. Java8UninstallEffort.bat
-Batch script for Windows systems to handle Java 8 uninstallation.
-*(File contents not provided in the current context)*
+Batch script wrapper for the PowerShell script that:
+- Copies the PS1 script to the KACE working directory
+- Executes PowerShell with bypass execution policy
+- Ensures proper script execution in KACE environment
 
 ### 4. jamf_removal.sh
-Shell script for macOS systems managed by Jamf to handle Java 8 uninstallation.
-*(File contents not provided in the current context)*
+Comprehensive shell script for macOS Java removal that:
+- Removes Java browser plugins
+- Removes Java control panel
+- Cleans up Java installation caches
+- Removes JDK/JRE installations
+
+The script handles multiple locations:
+- Browser plugins (`/Library/Internet Plug-Ins/JavaAppletPlugin.plugin`)
+- System preferences (`/Library/PreferencePanes/JavaControlPanel.prefPane`)
+- User caches (`~/Library/Application Support/Oracle/Java`)
+- System-wide Java installations (`/Library/Java/JavaVirtualMachines`)
+- Receipt files and other remnants
+
+Features:
+- Preserves OpenJDK installations
+- Handles both system and user-level installations
+- Provides detailed logging of removed items
+- Includes superuser verification
+
+## Prerequisites
+
+Systems must be managed by one of the following:
+- KACE Systems Management Appliance (for SQL query and Windows scripts)
+- Windows PowerShell 1.0 or later (for PS1 script)
+- Jamf Pro (for macOS script)
+- Administrative/root privileges on target systems
+
+## Implementation Notes
+
+### Windows Implementation
+- The PowerShell script should be deployed through KACE using the batch wrapper
+- Logs are created in the KACE working directory
+- Silent operation suitable for background deployment
+
+### macOS Implementation
+- Script requires root privileges (sudo)
+- Preserves non-Oracle Java installations
+- Can be deployed via Jamf Pro or run manually
+
+### General Notes
+- All scripts include logging for verification and troubleshooting
+- Scripts are designed for silent operation in enterprise environments
+- Each script includes self-cleanup functionality
+- The rollout is designed to be gradual to minimize potential impact
+- All scripts verify Java 8 presence before attempting removal
 
