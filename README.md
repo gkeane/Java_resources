@@ -85,3 +85,15 @@ Systems must be managed by one of the following:
 - The rollout is designed to be gradual to minimize potential impact
 - All scripts verify Java 8 presence before attempting removal
 
+### Fallback Solutions
+For systems where standard uninstallation methods fail, this repository includes references to additional tools:
+
+#### Java Runtime Nuker
+For Windows systems with stubborn Java installations, the [Java Runtime Nuker](https://github.com/bmrf/standalone_scripts/blob/master/java_runtime_nuker.bat) script provides comprehensive removal capabilities:
+- Removes all Java Runtime versions (3-11)
+- Cleans registry entries
+- Removes file system remnants
+- Stops and removes services
+- Cleans user profile caches
+- Handles both 32-bit and 64-bit installations
+
