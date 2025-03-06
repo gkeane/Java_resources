@@ -72,6 +72,16 @@ This guide provides step-by-step instructions for implementing a phased Java 8 r
    - Failed Deployments
    - Pending Executions
 
+### Extension Attribute Reporting
+1. Navigate to **Advanced Searches**
+2. Create new search:
+   - **Display Name**: Java 8 Status Report
+   - Add criteria:
+     - Extension Attribute > OracleJavaVersion > is not blank
+3. Save and run report to:
+   - Track remaining Java 8 installations
+   - Export results for stakeholder updates
+   - Monitor deployment progress
 
 ## Troubleshooting
 
