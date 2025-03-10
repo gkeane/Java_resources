@@ -72,6 +72,31 @@ This guide provides step-by-step instructions for implementing a phased Java 8 r
    - Failed Deployments
    - Pending Executions
 
+### CrowdStrike FQL Monitoring
+1. Use the following FQL query to monitor Java executions (last 7 days):
+   ```sql
+   (#event_simpleName = ProcessRollup2 or #ecs.version = *) |
+   (CommandLine !="*/java_home") AND
+   (CommandLine !="./javasettings") AND
+   (CommandLine = "*java*") and
+   (event_platform = "Mac") and
+   (CommandLine != "*find*") AND
+   (CommandLine != "*Updater*") AND
+   (CommandLine != "*Plugin*")
+   | tail(1000)
+   ```
+   
+   This query will:
+   - Show Java process executions on Mac systems
+   - Exclude common false positives
+   - Display up to 1000 most recent entries
+   - Help identify systems still using Java after removal
+
+2. Monitor results to:
+   - Identify non-compliant systems
+   - Detect unauthorized Java installations
+   - Validate removal success
+
 ### Extension Attribute Reporting
 1. Navigate to **Advanced Searches**
 2. Create new search:
