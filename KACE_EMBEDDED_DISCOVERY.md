@@ -32,12 +32,17 @@ This guide details the deployment of scripts to discover embedded Java installat
 2. Click **Choose Action > New**
 3. Configure the rule:
    ```
-   Name: CI-Java_location
-   Type: PowerShell
-   Upload CI-java_installations.ps1
+   Name: Embedded Java Inventory
+   Type: Shell Command Text Return
+   Command: ShellCommandTextReturn(cmd /c type c:\Programdata\Quest\KACE\user\java_installations.log)
    Return Type: String (Text)
    ```
 4. Click **Save**
+
+Note: This rule simply reads the contents of the log file created by the Java discovery script. The command uses:
+- `cmd /c`: Executes the command and terminates
+- `type`: Displays the contents of the text file
+- Path points to the standard KACE agent data directory
 
 ### 3. Monitor Deployment
 1. Check script status:
