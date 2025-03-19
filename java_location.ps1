@@ -10,7 +10,8 @@ $javaInstalls = @()
 # Define paths to search
 $searchPaths = @(
     "${env:ProgramFiles}",
-    "${env:ProgramFiles(x86)}"
+    "${env:ProgramFiles(x86)}",
+    "${env:ProgramData}"
 )
 
 # Define system paths to check (no recursion needed)
@@ -20,7 +21,7 @@ $systemPaths = @(
 )
 
 # Define executables to look for
-$javaExes = @("java.exe", "javaw.exe")
+$javaExes = @("java.exe", "javaw.exe", "javap.exe")
 
 # Define output path
 $outputPath = "C:\ProgramData\Quest\KACE\user\java_installations.log"
@@ -46,12 +47,13 @@ foreach ($systemPath in $systemPaths) {
         $versionInfo = $fileInfo.VersionInfo
         
         # Create formatted string with relevant information
-        $javaEntry = "{0},{1},{2},{3},{4}" -f `
+        $javaEntry = "{0},{1},{2},{3},{4},{5}" -f `
             $file.Name,
             $file.FullName,
             $versionInfo.FileVersion,
             $versionInfo.ProductVersion,
-            $versionInfo.CompanyName
+            $versionInfo.CompanyName,
+            $versionInfo.FileDescription
 
         # Add to results array
         $javaInstalls += $javaEntry
@@ -71,12 +73,13 @@ foreach ($basePath in $searchPaths) {
         $versionInfo = $fileInfo.VersionInfo
         
         # Create formatted string with relevant information
-        $javaEntry = "{0},{1},{2},{3},{4}" -f `
+        $javaEntry = "{0},{1},{2},{3},{4},{5}" -f `
             $file.Name,
             $file.FullName,
             $versionInfo.FileVersion,
             $versionInfo.ProductVersion,
-            $versionInfo.CompanyName
+            $versionInfo.CompanyName,
+            $versionInfo.FileDescription
 
         # Add to results array
         $javaInstalls += $javaEntry
