@@ -108,3 +108,21 @@ if [ -d "${PLUGIN}" ]; then
 else
     echo "Plugin not found"
 fi
+
+echo "Checking Oracle Java Support directory..."
+ORACLE_JAVA="/Library/Application Support/Oracle/Java"
+if [ -d "${ORACLE_JAVA}" ]; then
+    echo "Found ${ORACLE_JAVA}"
+    ls -la "${ORACLE_JAVA}"
+    echo "Attempting direct removal..."
+    sudo rm -rf "${ORACLE_JAVA}"
+    if [ -d "${ORACLE_JAVA}" ]; then
+        echo "ERROR: Oracle Java directory still exists after removal attempt"
+        echo "Current permissions:"
+        ls -la "/Library/Application Support/Oracle/"
+    else
+        echo "Oracle Java directory successfully removed"
+    fi
+else
+    echo "Oracle Java directory not found"
+fi
