@@ -90,3 +90,21 @@ for _jvm in `/usr/bin/find /Library/Java/JavaVirtualMachines -mindepth 1 -maxdep
       fi
    fi
 done
+
+echo "Specifically checking JavaAppletPlugin..."
+PLUGIN="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin"
+if [ -d "${PLUGIN}" ]; then
+    echo "Found ${PLUGIN}"
+    ls -la "${PLUGIN}"
+    echo "Attempting direct removal..."
+    sudo rm -rf "${PLUGIN}"
+    if [ -d "${PLUGIN}" ]; then
+        echo "ERROR: Plugin still exists after removal attempt"
+        echo "Current permissions:"
+        ls -la "/Library/Internet Plug-Ins/"
+    else
+        echo "Plugin successfully removed"
+    fi
+else
+    echo "Plugin not found"
+fi
